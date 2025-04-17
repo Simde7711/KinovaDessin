@@ -44,14 +44,14 @@
 
             if ($methode == "POST" && count($uris) == 2 && (preg_match('/^(?:\d{1,3}\.){3}\d{1,3}$/',$uris[1])))
             {
-                $reponse = $controllerLMG->EcrireJson($uris[1]);
+                $reponse = $controllerLMG->CreationRobot($uris[1]);
             }
             
             break;
 
         default:
         // Si aucun des endpoints correspond.
-        $reponse = $controllerGestionCode->GererCode(400, "Vous n'avez pas les bons endpoints.");
+        $reponse = $controllerGestionCode->GererCode(404, "Vous n'avez pas les bons endpoints.");
         break;
     }
 

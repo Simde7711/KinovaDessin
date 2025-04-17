@@ -26,7 +26,7 @@
 
         }
 
-        public function EcrireJson(String $_ipRobot)
+        public function CreationRobot(String $_ipRobot)
         {
             // Récupère les informations du json qui est passé par le POST.
             $paramsJson = file_get_contents('php://input');
@@ -43,12 +43,12 @@
 
             if ($jsonFileContenu != null)
             {
-                for ($i=0; $i < array.count; $i++) { 
-                   array_push($array["robots"], $jsonFileContenu["robots"][i]);
+                for ($i=0; $i < count($jsonFileContenu["robots"]); $i++) { 
+                   array_push($array["robots"], $jsonFileContenu["robots"][$i]);
                 }
             }
 
-            bool $estDansJson = false;
+            $estDansJson = false;
             foreach($array["robots"] as $robot)
             {
                 if ($robot["ip"] == $_ipRobot)
@@ -60,13 +60,32 @@
             if (!$estDansJson)
             { 
                 array_push($array["robots"], $this->Modeliser($_ipRobot, $params));
-            }
+                $jsonReady = json_encode($array);
 
-            $jsonReady = json_encode($array);
-
-            file_put_contents($this->pathDepot.'commands.json', $jsonReady);
+                file_put_contents($this->pathDepot.'commands.json', $jsonReady);
             
-            return $this->gestionCode->GererCode(201, "tip chiasse.");
+                return $this->gestionCode->GererCode(201, "tip chiasse. Le robot a été starter");
+            }
+            else
+            {
+                return $this->gestionCode->GererCode(400, "Le robot est déjà en fonction");
+            }
         }    
+
+        public function UpdateParametresRobot(String $_ipRobot)
+        {
+            // Récupère les informations du json qui est passé par le POST.
+            $paramsJson = file_get_contents('php://input');
+
+            // Décode les informations pour les utiliser.
+            $params = json_decode($paramsJson, true);
+
+            $jsonFile = file_get_contents($this->pathDepot.'parameters.json');
+            $jsonFileContenu = json_decode($jsonFile, true);
+
+            $array = array(
+                "robots" => array()
+            );
+        }
     }
 ?>
