@@ -36,7 +36,7 @@
     // Vérifier les endpoints pour read dans l'inventaire et l'achats d'articles.
     switch ($uris[0]) 
     {
-        case "Robot": 
+        case "Robots": 
             if ($methode == "GET" && count($uris) == 1)
             {
                 // $reponse =
