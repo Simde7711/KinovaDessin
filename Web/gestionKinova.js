@@ -1,6 +1,6 @@
 robot = [];
 zoneRobot;
-
+robotCount = 1;
 function init()
 {
     zoneRobot= document.getElementById("zoneRobot");
@@ -13,7 +13,7 @@ function AjoutRobot()
 
     // Ajouter un titre "Hi" au conteneur du robot
     let title = document.createElement('h2');
-    title.textContent = 'robot';
+    title.textContent = 'Robot #' + robotCount;
     robot.appendChild(title);
 
     let ipTitle = document.createElement('h4');
@@ -39,14 +39,8 @@ function AjoutRobot()
     // Créer un conteneur pour les commandes
     let commands = document.createElement('div');
     commands.setAttribute('id', 'commands'); // Utiliser 'id' au lieu de 'name'
-
-
-    
-
-
-
     let command = document.createElement('h4');
-    command.textContent = 'commande: ';
+    command.textContent = 'Commande : ';
     command.setAttribute('id', 'command');
     commands.appendChild(command);
 
@@ -70,11 +64,58 @@ function AjoutRobot()
     draw.setAttribute('type', 'checkbox'); // Utiliser 'checkbox' pour un booléen
     command.appendChild(draw);
 
+    // Ajouter un bouton pour ajouter des lignes "commands"
+    let addCommandButton = document.createElement("button");
+    addCommandButton.textContent = "Ajouter une commande";
+    addCommandButton.addEventListener("click", () => {
+        // Créer une nouvelle ligne de commande
+        let newCommand = document.createElement("div");
+        newCommand.textContent = "Commande #" + (commands.childElementCount + 1) + " "; // Compter le nombre d'éléments enfants pour le numéro de commande
+        newCommand.classList.add("command-line");
+
+        let xInput = document.createElement("input");
+        xInput.setAttribute("type", "number");
+        xInput.setAttribute("placeholder", "X");
+        newCommand.appendChild(xInput);
+
+        let yInput = document.createElement("input");
+        yInput.setAttribute("type", "number");
+        yInput.setAttribute("placeholder", "Y");
+        newCommand.appendChild(yInput);
+
+        let iInput = document.createElement("input");
+        iInput.setAttribute("type", "number");
+        iInput.setAttribute("placeholder", "I");
+        newCommand.appendChild(iInput);
+
+        let drawCheckbox = document.createElement("input");
+        drawCheckbox.setAttribute("type", "checkbox");
+        newCommand.appendChild(drawCheckbox);
+
+        // Ajouter la nouvelle ligne de commande au conteneur "commands"
+        commands.appendChild(newCommand);
+    });
+
+
+
+    // Ajouter un bouton "finis" pour chaque robot
+    let finishButton = document.createElement("button");
+    finishButton.textContent = "Finis";
+    let currentRobotCount = robotCount; // Capturer la valeur actuelle de robotCount
+    finishButton.addEventListener("click", () => {
+        alert("Configuration du Robot #" + currentRobotCount + " terminée !");
+    });
+
+    // Ajouter le bouton "Ajouter une commande" au conteneur du robot
+    robot.appendChild(addCommandButton); // <-- Ajouté au conteneur du robot
     // Ajouter le conteneur des commandes au robot
     robot.appendChild(commands);
-
+    // Ajouter le bouton "finis" au conteneur du robot
+    robot.appendChild(finishButton);
     // Ajouter le robot à la zone principale
-    zoneRobot.appendChild(robot);
+    zoneRobot.appendChild(robot); // <-- Le conteneur du robot est ajouté à zoneRobot
+    // +1 au nombre de robots
+    robotCount++;
 }
 
 function RefreshRobot()
