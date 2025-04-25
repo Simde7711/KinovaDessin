@@ -1,6 +1,7 @@
 <?php
     // Dépendances
     require_once(dirname(__FILE__).'/../model/modelCommands.php');
+    require_once(dirname(__FILE__).'/../model/modelParameters.php');
 
     Class ControllerLMG
     {
@@ -13,9 +14,17 @@
             $this->pathDepot = dirname(__FILE__)."/../zoneDepot/";
         }
 
-        private function Modeliser(string $_ipRobot, array $_params)
+        private function ModeliserCommands(string $_ipRobot, array $_params)
         {
             return new ModelCommands(
+                $_ipRobot,
+                $_params
+            );
+        }
+
+        private function ModeliserParameters(string $_ipRobot, array $_params)
+        {
+            return new ModelParameters(
                 $_ipRobot,
                 $_params
             );
@@ -80,7 +89,7 @@
 
             if (!$estDansJson)
             { 
-                array_push($array["robots"], $this->Modeliser($_ipRobot, $params));
+                array_push($array["robots"], $this->ModeliserCommands($_ipRobot, $params));
                 $jsonReady = json_encode($array);
 
                 file_put_contents($this->pathDepot.'commands.json', $jsonReady);
@@ -107,6 +116,35 @@
             $array = array(
                 "robots" => array()
             );
+
+            if ($jsonFileContenu != null)
+            {
+                for ($i=0; $i < count($jsonFileContenu["robots"]); $i++) { 
+                   array_push($array["robots"], $jsonFileContenu["robots"][$i]);
+                }
+            }
+
+            $estDansJson = false;
+            for ($i=0; $i < count($array["robots"]); $i++)
+            {
+                if ($array["robots"][$i]["ip"] == $_ipRobot)
+                {
+                    $array["robots"][$i]["parameters"] = $params;
+                    $estDansJson = true;
+                }
+            }
+            
+            if (!$estDansJson)
+            {
+                array_push($array["robots"], $this->ModeliserParameters($_ipRobot, $params));
+            }
+            
+            $jsonReady = json_encode($array);
+            file_put_contents($this->pathDepot.'parameters.json', $jsonReady);
+        
+
+            return array("message" => $this->gestionCode->GererCode(201, "tip chiasse. Le robot a été starter"));
+            
         }
     }
 ?>

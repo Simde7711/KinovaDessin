@@ -45,6 +45,11 @@
             {
                 $reponse = $controllerLMG->CreationRobot($uris[1]);
             }
+
+            if ($methode == "PUT" && count($uris) == 2 && (preg_match('/^(?:\d{1,3}\.){3}\d{1,3}$/',$uris[1])))
+            {
+                $reponse = $controllerLMG->UpdateParametresRobot($uris[1]);
+            }
             
             break;
 

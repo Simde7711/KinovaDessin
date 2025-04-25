@@ -1,16 +1,20 @@
 {
-    "robots":[
+    "robots": [
         {
-            "robot":"10.10.10.10",
-            "vitesse":10,
-            "pause":false,
-            "cancel": true
+            "ip": "10.10.10.174",
+            "parameters": {
+                "vitesse": 2,
+                "pause": false,
+                "cancel": true
+            }
         },
         {
-            "robot":"10.10.10.20",
-            "vitesse":10,
-            "pause":false,
-            "cancel": true
+            "ip": "10.10.10.120",
+            "parameters": {
+                "vitesse": 2,
+                "pause": false,
+                "cancel": true
+            }
         }
     ]
 }
