@@ -21,9 +21,30 @@
             );
         }
 
-        public function LireJson()
+        public function LireInformation()
         {
+            $jsonFile = file_get_contents($this->pathDepot.'robotsInformation.json');
+            $jsonFileContenu = json_decode($jsonFile, true);
 
+            $infoRobot = array();
+            foreach ($jsonFileContenu["robots"] as $robot)
+            {
+                array_push($infoRobot, $robot);
+            }
+
+            if ($infoRobot != "")
+            {
+                return array(
+                    "message" => $this->gestionCode->GererCode(200, "information du robot récupéré"),
+                    "robots" => $infoRobot
+                );
+            }
+            else
+            {
+                return array(
+                    "message" => $this->gestionCode->GererCode(400, "aucune robot n'a cette ip")
+                );
+            }
         }
 
         public function CreationRobot(String $_ipRobot)
@@ -64,11 +85,11 @@
 
                 file_put_contents($this->pathDepot.'commands.json', $jsonReady);
             
-                return $this->gestionCode->GererCode(201, "tip chiasse. Le robot a été starter");
+                return array("message" => $this->gestionCode->GererCode(201, "tip chiasse. Le robot a été starter"));
             }
             else
             {
-                return $this->gestionCode->GererCode(400, "Le robot est déjà en fonction");
+                return array("message" => $this->gestionCode->GererCode(400, "Le robot est déjà en fonction"));
             }
         }    
 

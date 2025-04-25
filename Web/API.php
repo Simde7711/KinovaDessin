@@ -33,13 +33,12 @@
     // Traiter la demande.
     $reponse;
 
-    // Vérifier les endpoints pour read dans l'inventaire et l'achats d'articles.
     switch ($uris[0]) 
     {
         case "Robots": 
-            if ($methode == "GET" && count($uris) == 1)
+            if ($methode == "GET" && count($uris) == 2 && $uris[1] == "informations")
             {
-                // $reponse =
+                $reponse = $controllerLMG->LireInformation($uris[1]);
             }
 
             if ($methode == "POST" && count($uris) == 2 && (preg_match('/^(?:\d{1,3}\.){3}\d{1,3}$/',$uris[1])))
