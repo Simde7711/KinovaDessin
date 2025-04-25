@@ -1,66 +1,99 @@
-
-#include "./include/client/SessionManager.h"
-#include "./include/client_stubs/DeviceConfigClientRpc.h"
-#include "./include/client_stubs/BaseClientRpc.h"
-
-#include "./include/client/RouterClient.h"
-#include "./include/client/TransportClientUdp.h"
-
-#include "utilities.h"
+#include "./include/SessionManager.h"
+#include "./include/DeviceConfigClientRpc.h"
+#include "./include/BaseClientRpc.h"
+#include "./include/TransportClientUdp.h"
+#include "./include/BaseCyclicClientRpc.h"
+#include "./include/BaseClientRpc.h"
+#include "./include/RouterClient.h"
+#include <cstdio>
+#include <cstdlib>
+#include <ctime>
 
 namespace k_api = Kinova::Api;
 
-void example_api_creation(int argc, char **argv)
-{
-    auto parsed_args = ParseExampleArguments(argc, argv);
+#define PORT 10000
 
+#define PORT_REAL_TIME 10001
+
+k_api::Base::BaseClient *base;
+
+k_api::BaseCyclic::BaseCyclicClient *basecyclic;
+
+k_api::DeviceConfig::DeviceConfigClient *device_config;
+
+k_api::SessionManager *session_manager;
+
+k_api::RouterClient *router;
+
+k_api::TransportClientUdp *transport;
+
+void example_api_creation(int argc, char **argv) {
+
+  if (argc != 3) {printf("usage: \n vibrate_kinova [IP_ADRESS] [username] [password]");exit(1);}
     // -----------------------------------------------------------
     // How to create an API with the SessionManager, DeviceConfigClient and BaseClient services
     auto error_callback = [](k_api::KError err){ cout << "_________ callback error _________" << err.toString(); };
-    auto transport = new k_api::TransportClientTcp();
-    auto router = new k_api::RouterClient(transport, error_callback);
-    transport->connect(parsed_args.ip_address, PORT);
+    transport = new k_api::TransportClientUdp();
+    router = new k_api::RouterClient(transport, error_callback);
+    printf(argv[1]);
+    transport->connect(argv[1], PORT_REAL_TIME);
 
     // Set session data connection information
     auto create_session_info = k_api::Session::CreateSessionInfo();
-    create_session_info.set_username(parsed_args.username);
-    create_session_info.set_password(parsed_args.password);
+    printf(argv[2]);
+    create_session_info.set_username(argv[2]);
+    printf(argv[3]);
+    create_session_info.set_password(argv[3]);
     create_session_info.set_session_inactivity_timeout(60000);   // (milliseconds)
     create_session_info.set_connection_inactivity_timeout(2000); // (milliseconds)
 
     // Session manager service wrapper
     std::cout << "Creating session for communication" << std::endl;
-    auto session_manager = new k_api::SessionManager(router);
+    session_manager = new k_api::SessionManager(router);
     session_manager->CreateSession(create_session_info);
     std::cout << "Session created" << std::endl;
 
     // Create DeviceConfigClient and BaseClient
-    auto device_config = new k_api::DeviceConfig::DeviceConfigClient(router);
-    auto base = new k_api::Base::BaseClient(router);
+    device_config = new k_api::DeviceConfig::DeviceConfigClient(router);
+    basecyclic = new k_api::BaseCyclic::BaseCyclicClient(router);
+    base = new k_api::Base::BaseClient(router);
 
-    // -----------------------------------------------------------
-    // Now you're ready to use the API
-    // ...
-    // -----------------------------------------------------------
-    // After you're done, here's how to tear down the API
 }
-void prepare(k_api::Base:BaseClient* base , k_api::Base::Base::ServoingMode mode)
-{
+
+void prepare() {
+        
 	auto servomode = k_api::Base::ServoingModeInformation();
-	servomode.set_servoing_mode(mode);
-	base->SetServoingMode(servomode);
+	servomode.set_servoing_mode(k_api::Base::ServoingMode::LOW_LEVEL_SERVOING);
+        base->SetServoingMode(servomode);
 	std::this_thread::sleep_for(std::chrono::milliseconds(500));
-
-
 }
-bool angular_move(k_api::Base::BaseClient* base)
-{
-	auto movement = k_api::Base::Action();
-	
+
+void vibrate(int Ms) {
+
+  k_api::BaseCyclic::Feedback base_feedback;
+  k_api::BaseCyclic::Command  base_command;
+
+  base_feedback = basecyclic->RefreshFeedback();
+
+  int servoscount = base->GetActuatorCount().count();
+  int i=0;
+
+  float servos[servoscount];
+  
+  while (i < servoscount) {
+    servos[i] = base_feedback.actuators(i).position();
+    base_command.add_actuators()->set_position(base_feedback.actuators(i).position());
+    i++;
+  }
+
+  int timer = 0;
+  struct timespec start;
+  clock_gettime(CLOCK_MONOTONIC, &start);
+  
 }
+
 void destroy_API()
 {
-
     // Close API session
     session_manager->CloseSession();
 
@@ -68,7 +101,7 @@ void destroy_API()
     router->SetActivationStatus(false);
     transport->disconnect();
 
-    	// Destroy the API
+    // Destroy the API
     delete base;
     delete device_config;
     delete session_manager;
@@ -78,7 +111,8 @@ void destroy_API()
 
 int main(int argc, char **argv)
 {
-    example_api_creation(argc, argv);
-    angular_move();
-	destroy_API();
+  example_api_creation(argc, argv);
+  prepare();
+  vibrate(4000);
+  destroy_API();
 }
