@@ -1,4 +1,4 @@
-#include "utilities.h"
+#include "structJson.h"
 
 #include <string>
 #include <vector>
@@ -16,5 +16,7 @@ class Robot
     private:
         Commands *commandsPtr;
         Parameters *parametersPtr;
+
+        void Process();
 
 };

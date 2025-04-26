@@ -12,7 +12,7 @@ struct Position
 struct Commands
 {
     int scale;
-    std::vector<Position>;
+    std::vector<Position> positions;;
 };
 
 struct Parameters
