@@ -13,3 +13,8 @@ Robot::~Robot()
     delete commandsPtr;
     delete parametersPtr;
 }
+
+void Robot::UpdateParameters(Parameters *_parameters)
+{
+    *parametersPtr = *_parameters;
+}

@@ -6,10 +6,12 @@
 class Robot
 {
     public:
+        std::string ipRobot;
+        
         Robot(std::string *_ipRobot, Commands *_commands, Parameters *_parameters);
         ~Robot();
 
-        std::string ipRobot;
+        void UpdateParameters(Parameters *_parameters);
 
     private:
         Commands *commandsPtr;
