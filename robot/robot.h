@@ -6,13 +6,13 @@
 class Robot
 {
     public:
-        Robot();
+        Robot(std::string& _ipRobot, Commands& _commands, Parameters& _parameters);
         ~Robot();
 
-        extern std::string ipRobot;
+        std::string ipRobot;
 
     private:
-        extern Commands* commandsPtr;
-        extern Parameters* parametersPtr;
+        Commands* commandsPtr;
+        Parameters* parametersPtr;
 
 };
