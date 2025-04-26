@@ -6,7 +6,7 @@
 
 #include "KBasicException.h"
 
-#include <Frame.pb.h>
+#include "Frame.pb.h"
 #include "KError.h"
 
 #include "HeaderInfo.h"

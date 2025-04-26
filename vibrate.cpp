@@ -1,13 +1,17 @@
-#include "./include/SessionManager.h"
-#include "./include/DeviceConfigClientRpc.h"
-#include "./include/BaseClientRpc.h"
-#include "./include/TransportClientUdp.h"
-#include "./include/BaseCyclicClientRpc.h"
-#include "./include/BaseClientRpc.h"
-#include "./include/RouterClient.h"
+
 #include <cstdio>
 #include <cstdlib>
 #include <ctime>
+#include <iostream>
+#include <ostream>
+#include "include/SessionManager.h"
+#include "include/DeviceConfigClientRpc.h"
+#include "include/BaseClientRpc.h"
+#include "include/TransportClientUdp.h"
+#include "include/BaseCyclicClientRpc.h"
+#include "include/BaseClientRpc.h"
+#include "include/RouterClient.h"
+
 
 namespace k_api = Kinova::Api;
 
@@ -27,9 +31,9 @@ k_api::RouterClient *router;
 
 k_api::TransportClientUdp *transport;
 
-void example_api_creation(int argc, char **argv) {
+void example_api_creation(char **argv) {
 
-  if (argc != 3) {printf("usage: \n vibrate_kinova [IP_ADRESS] [username] [password]");exit(1);}
+
     // -----------------------------------------------------------
     // How to create an API with the SessionManager, DeviceConfigClient and BaseClient services
     auto error_callback = [](k_api::KError err){ cout << "_________ callback error _________" << err.toString(); };
@@ -68,7 +72,7 @@ void prepare() {
 	std::this_thread::sleep_for(std::chrono::milliseconds(500));
 }
 
-void vibrate(int Ms) {
+void vibrate(int timer_max,int frequency,float velocity_vibrate) { //timer_max en ms, frequency en hertz et velocity en degres par ?temps?
 
   k_api::BaseCyclic::Feedback base_feedback;
   k_api::BaseCyclic::Command  base_command;
@@ -85,10 +89,30 @@ void vibrate(int Ms) {
     base_command.add_actuators()->set_position(base_feedback.actuators(i).position());
     i++;
   }
-
-  int timer = 0;
-  struct timespec start;
-  clock_gettime(CLOCK_MONOTONIC, &start);
+  
+  i=0;
+  timespec t_first;
+  timespec t_last;
+  int max = timer_max *(frequency / 1000); // convertir kHz et un temps (en ms) en nombre d'iterations. C'est
+                                     // plus optimiser comme sa que avec un autre timer.
+  frequency = 1000000000 / frequency; // convertir Hertz en intervalles de nanosecondes
+  while (i<max) {
+    clock_gettime(CLOCK_MONOTONIC, &t_first);
+    
+    // DO THINGS UNDER
+    for (int x = 0; x < servoscount; x++) {
+      base_command.mutable_actuators(x)->set_velocity(velocity_vibrate);//la velocite EST EN QUOI! Selon l<utilisation de fmod() dans lexemple on peut deviner que cest en degres mais un velocite prend un facteur de temps!!! je devine par seconde.
+    }
+    velocity_vibrate=-velocity_vibrate;
+    // DO THINGS ABOVE
+    
+    clock_gettime(CLOCK_MONOTONIC, &t_last);
+    while ( ((( t_last.tv_sec - t_first.tv_sec ) *1000000000 ) + ( t_last.tv_nsec - t_first.tv_nsec ) ) < frequency) {
+      clock_gettime(CLOCK_MONOTONIC, &t_last);
+    }
+    i++;
+  }
+  
   
 }
 
@@ -109,10 +133,14 @@ void destroy_API()
     delete transport;
 }
 
-int main(int argc, char **argv)
-{
-  example_api_creation(argc, argv);
+
+
+int main(int argc, char **argv) {
+  if(argc != 6){printf("usage: vibrate [host] [username] [password] [temps] [frequence]");exit(1);}
+  example_api_creation(argv);
   prepare();
-  vibrate(4000);
+  int timer_max; sscanf(argv[4],"%d",&timer_max);
+  int frequency; sscanf(argv[5], "%d",&frequency);
+  vibrate(timer_max,frequency,0.1f);
   destroy_API();
 }

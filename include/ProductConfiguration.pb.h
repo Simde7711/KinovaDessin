@@ -73,12 +73,13 @@ enum ModelId {
   MODEL_ID_UNSPECIFIED = 0,
   MODEL_ID_L53 = 1,
   MODEL_ID_L31 = 2,
+  MODEL_ID_HDK = 3,
   ModelId_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   ModelId_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool ModelId_IsValid(int value);
 const ModelId ModelId_MIN = MODEL_ID_UNSPECIFIED;
-const ModelId ModelId_MAX = MODEL_ID_L31;
+const ModelId ModelId_MAX = MODEL_ID_HDK;
 const int ModelId_ARRAYSIZE = ModelId_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* ModelId_descriptor();
@@ -96,12 +97,13 @@ enum BaseType {
   BASE_TYPE_L53_QUICK_CONNECT = 1,
   BASE_TYPE_L53_FIXED = 2,
   BASE_TYPE_L31_FIXED = 3,
+  BASE_TYPE_HDK_FIXED = 4,
   BaseType_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   BaseType_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool BaseType_IsValid(int value);
 const BaseType BaseType_MIN = BASE_TYPE_UNSPECIFIED;
-const BaseType BaseType_MAX = BASE_TYPE_L31_FIXED;
+const BaseType BaseType_MAX = BASE_TYPE_HDK_FIXED;
 const int BaseType_ARRAYSIZE = BaseType_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* BaseType_descriptor();
@@ -230,27 +232,6 @@ inline bool WristType_Parse(
     const ::std::string& name, WristType* value) {
   return ::google::protobuf::internal::ParseNamedEnum<WristType>(
     WristType_descriptor(), name, value);
-}
-enum BrakeType {
-  BRAKE_TYPE_UNSPECIFIED = 0,
-  BRAKE_TYPE_NOT_INSTALLED = 1,
-  BrakeType_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
-  BrakeType_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
-};
-bool BrakeType_IsValid(int value);
-const BrakeType BrakeType_MIN = BRAKE_TYPE_UNSPECIFIED;
-const BrakeType BrakeType_MAX = BRAKE_TYPE_NOT_INSTALLED;
-const int BrakeType_ARRAYSIZE = BrakeType_MAX + 1;
-
-const ::google::protobuf::EnumDescriptor* BrakeType_descriptor();
-inline const ::std::string& BrakeType_Name(BrakeType value) {
-  return ::google::protobuf::internal::NameOfEnum(
-    BrakeType_descriptor(), value);
-}
-inline bool BrakeType_Parse(
-    const ::std::string& name, BrakeType* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<BrakeType>(
-    BrakeType_descriptor(), name, value);
 }
 // ===================================================================
 
@@ -435,12 +416,6 @@ class CompleteProductConfiguration : public ::google::protobuf::Message /* @@pro
   ::Kinova::Api::ProductConfiguration::WristType wrist_type() const;
   void set_wrist_type(::Kinova::Api::ProductConfiguration::WristType value);
 
-  // .Kinova.Api.ProductConfiguration.BrakeType brake_type = 13;
-  void clear_brake_type();
-  static const int kBrakeTypeFieldNumber = 13;
-  ::Kinova::Api::ProductConfiguration::BrakeType brake_type() const;
-  void set_brake_type(::Kinova::Api::ProductConfiguration::BrakeType value);
-
   // @@protoc_insertion_point(class_scope:Kinova.Api.ProductConfiguration.CompleteProductConfiguration)
  private:
 
@@ -457,7 +432,6 @@ class CompleteProductConfiguration : public ::google::protobuf::Message /* @@pro
   int interface_module_type_;
   int arm_laterality_;
   int wrist_type_;
-  int brake_type_;
   mutable int _cached_size_;
   friend struct ::protobuf_ProductConfiguration_2eproto::TableStruct;
   friend void ::protobuf_ProductConfiguration_2eproto::InitDefaultsCompleteProductConfigurationImpl();
@@ -887,20 +861,6 @@ inline void CompleteProductConfiguration::set_wrist_type(::Kinova::Api::ProductC
   // @@protoc_insertion_point(field_set:Kinova.Api.ProductConfiguration.CompleteProductConfiguration.wrist_type)
 }
 
-// .Kinova.Api.ProductConfiguration.BrakeType brake_type = 13;
-inline void CompleteProductConfiguration::clear_brake_type() {
-  brake_type_ = 0;
-}
-inline ::Kinova::Api::ProductConfiguration::BrakeType CompleteProductConfiguration::brake_type() const {
-  // @@protoc_insertion_point(field_get:Kinova.Api.ProductConfiguration.CompleteProductConfiguration.brake_type)
-  return static_cast< ::Kinova::Api::ProductConfiguration::BrakeType >(brake_type_);
-}
-inline void CompleteProductConfiguration::set_brake_type(::Kinova::Api::ProductConfiguration::BrakeType value) {
-  
-  brake_type_ = value;
-  // @@protoc_insertion_point(field_set:Kinova.Api.ProductConfiguration.CompleteProductConfiguration.brake_type)
-}
-
 // -------------------------------------------------------------------
 
 // ProductConfigurationEndEffectorType
@@ -968,11 +928,6 @@ template <> struct is_proto_enum< ::Kinova::Api::ProductConfiguration::WristType
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::Kinova::Api::ProductConfiguration::WristType>() {
   return ::Kinova::Api::ProductConfiguration::WristType_descriptor();
-}
-template <> struct is_proto_enum< ::Kinova::Api::ProductConfiguration::BrakeType> : ::google::protobuf::internal::true_type {};
-template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::Kinova::Api::ProductConfiguration::BrakeType>() {
-  return ::Kinova::Api::ProductConfiguration::BrakeType_descriptor();
 }
 
 }  // namespace protobuf

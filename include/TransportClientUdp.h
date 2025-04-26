@@ -32,7 +32,23 @@
 #include <cstring>
 #include <cstdlib>
 #else
-#warning Unknown OS type!
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <netdb.h>      // host struct
+#include <sys/select.h> // use select() for multiplexing
+#include <sys/fcntl.h>  // for non-blocking
+
+#include <iostream>
+#include <unistd.h>
+#include <ctime>
+#include <stdio.h>
+#include <unistd.h>
+#include <cerrno>
+#include <cstdio>
+#include <cstring>
+#include <cstdlib>
 #endif
 
 #include <atomic>

@@ -299,11 +299,11 @@ class MotorCommand : public ::google::protobuf::Message /* @@protoc_insertion_po
   float velocity() const;
   void set_velocity(float value);
 
-  // float force = 5;
-  void clear_force();
-  static const int kForceFieldNumber = 5;
-  float force() const;
-  void set_force(float value);
+  // float force = 5 [deprecated = true];
+  GOOGLE_PROTOBUF_DEPRECATED_ATTR void clear_force();
+  GOOGLE_PROTOBUF_DEPRECATED_ATTR static const int kForceFieldNumber = 5;
+  GOOGLE_PROTOBUF_DEPRECATED_ATTR float force() const;
+  GOOGLE_PROTOBUF_DEPRECATED_ATTR void set_force(float value);
 
   // @@protoc_insertion_point(class_scope:Kinova.Api.GripperCyclic.MotorCommand)
  private:
@@ -1123,7 +1123,7 @@ inline void MotorCommand::set_velocity(float value) {
   // @@protoc_insertion_point(field_set:Kinova.Api.GripperCyclic.MotorCommand.velocity)
 }
 
-// float force = 5;
+// float force = 5 [deprecated = true];
 inline void MotorCommand::clear_force() {
   force_ = 0;
 }

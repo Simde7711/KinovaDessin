@@ -16,6 +16,8 @@
 #include "ITransportClient.h"
 #include "IRouterClient.h"
 
+using namespace std;
+
 namespace Kinova
 {
 namespace Api
@@ -65,7 +67,7 @@ namespace Api
     };
 
     // todoErr add the validation information beside the callback
-    typedef std::unordered_map< uint32_t, std::unique_ptr<AbstractCallbackFunction>> CallbackMap;
+    typedef std::unordered_map< uint32_t, vector< shared_ptr<AbstractCallbackFunction> > > CallbackMap;
 
     class NotificationHandler
     {
@@ -80,8 +82,8 @@ namespace Api
         void addCallback( uint32_t idKey, std::function<void(DataType)> callback )
         {
             std::lock_guard<std::mutex> w_scoped(m_mutex);
-            std::unique_ptr<AbstractCallbackFunction> fct{new CallbackFunction<DataType>(callback)};
-            m_callbackMap[idKey] = std::move(fct);
+            std::shared_ptr<AbstractCallbackFunction> fct = std::make_shared<CallbackFunction<DataType>>(callback);
+            m_callbackMap[idKey].push_back( fct );
         }
 
         void clearIdKeyCallbacks( uint32_t idKey );
