@@ -44,33 +44,13 @@ function AjoutRobot()
     command.setAttribute('id', 'command');
     commands.appendChild(command);
 
-    // Ajouter les champs d'entrée pour les commandes
-    let x = document.createElement("input");
-    x.setAttribute('type', 'number');
-    x.setAttribute('placeholder', 'X');
-    command.appendChild(x);
-
-    let y = document.createElement("input");
-    y.setAttribute('type', 'number');
-    y.setAttribute('placeholder', 'Y');
-    command.appendChild(y);
-
-    let i = document.createElement("input");
-    i.setAttribute('type', 'number');
-    i.setAttribute('placeholder', 'I');
-    command.appendChild(i);
-
-    let draw = document.createElement("input");
-    draw.setAttribute('type', 'checkbox'); // Utiliser 'checkbox' pour un booléen
-    command.appendChild(draw);
-
     // Ajouter un bouton pour ajouter des lignes "commands"
     let addCommandButton = document.createElement("button");
     addCommandButton.textContent = "Ajouter une commande";
     addCommandButton.addEventListener("click", () => {
         // Créer une nouvelle ligne de commande
         let newCommand = document.createElement("div");
-        newCommand.textContent = "Commande #" + (commands.childElementCount + 1) + " "; // Compter le nombre d'éléments enfants pour le numéro de commande
+        newCommand.textContent = "Commande #" + (commands.childElementCount) + " "; // Compter le nombre d'éléments enfants pour le numéro de commande
         newCommand.classList.add("command-line");
 
         let xInput = document.createElement("input");
