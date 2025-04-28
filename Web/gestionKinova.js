@@ -17,7 +17,7 @@ function AjoutRobot()
     robot.appendChild(title);
 
     let ipTitle = document.createElement('h4');
-    ipTitle.textContent = 'ip: ';
+    ipTitle.textContent = 'IP: ';
     robot.appendChild(ipTitle);
 
     // Ajouter un champ d'entrée pour l'IP
@@ -27,7 +27,7 @@ function AjoutRobot()
     ipTitle.appendChild(ip);
 
     let scaleTitle = document.createElement('h4');
-    scaleTitle.textContent = 'scale: ';
+    scaleTitle.textContent = 'Scale: ';
     robot.appendChild(scaleTitle);
 
     // Ajouter un champ d'entrée pour l'échelle
@@ -39,8 +39,8 @@ function AjoutRobot()
     // Créer un conteneur pour les commandes
     let commands = document.createElement('div');
     commands.setAttribute('id', 'commands'); // Utiliser 'id' au lieu de 'name'
-    let command = document.createElement('h4');
-    command.textContent = 'Commande : ';
+    let command = document.createElement('h3');
+    command.textContent = "Commande (Les positions X et Y, le nombre d'itération et si le mouvement dessine) : ";
     command.setAttribute('id', 'command');
     commands.appendChild(command);
 
@@ -50,7 +50,7 @@ function AjoutRobot()
     addCommandButton.addEventListener("click", () => {
         // Créer une nouvelle ligne de commande
         let newCommand = document.createElement("div");
-        newCommand.textContent = "Commande #" + (commands.childElementCount) + " "; // Compter le nombre d'éléments enfants pour le numéro de commande
+        newCommand.textContent = "Commande #" + (commands.childElementCount) + ": "; // Compter le nombre d'éléments enfants pour le numéro de commande
         newCommand.classList.add("command-line");
 
         let xInput = document.createElement("input");
@@ -78,12 +78,15 @@ function AjoutRobot()
 
 
 
-    // Ajouter un bouton "finis" pour chaque robot
+    // Ajouter un bouton "finis" pour chaque robot Ajouter une fonction pour que lorsqu'on appuie on dégrise les valeurs "vitesse" "pause" et "cancel" et on grise les valeurs 
+    // "IP" "Scale" ainsi que les commandes
     let finishButton = document.createElement("button");
     finishButton.textContent = "Finis";
     let currentRobotCount = robotCount; // Capturer la valeur actuelle de robotCount
     finishButton.addEventListener("click", () => {
         alert("Configuration du Robot #" + currentRobotCount + " terminée !");
+        GriserElement(); // Appeler la fonction GriserElement
+        apparaitreStats(); // Appeler la fonction apparaitreStats
     });
 
     // Ajouter le bouton "Ajouter une commande" au conteneur du robot
@@ -103,6 +106,58 @@ function RefreshRobot()
     
 }
 
+async function GriserElement()
+{
+    // Récupérer tous les éléments de la zoneRobot
+    let elements = zoneRobot.children;
+
+    // Parcourir chaque élément et le désactiver
+    for (let i = 0; i < elements.length; i++) {
+        let element = elements[i];
+        let inputs = element.querySelectorAll('input, button');
+        inputs.forEach(input => input.disabled = true); // Désactiver les champs d'entrée et les boutons
+    }
+}
+
+async function apparaitreStats()
+{
+
+    // Ajouter une box pour la vitesse
+    let speedBox = document.createElement('div');
+    speedBox.setAttribute('class', 'stat-box');
+    let speedLabel = document.createElement('label');
+    speedLabel.textContent = 'Vitesse: ';
+    let speedValue = document.createElement('span');
+    speedValue.textContent = '0'; // Valeur par défaut
+    speedBox.appendChild(speedLabel);
+    speedBox.appendChild(speedValue);
+    stats.appendChild(speedBox);
+
+    // Ajouter une box pour la pause
+    let pauseBox = document.createElement('div');
+    pauseBox.setAttribute('class', 'stat-box');
+    let pauseLabel = document.createElement('label');
+    pauseLabel.textContent = 'Pause: ';
+    let pauseValue = document.createElement('span');
+    pauseValue.textContent = 'Non'; // Valeur par défaut
+    pauseBox.appendChild(pauseLabel);
+    pauseBox.appendChild(pauseValue);
+    stats.appendChild(pauseBox);
+
+    // Ajouter une box pour le cancel
+    let cancelBox = document.createElement('div');
+    cancelBox.setAttribute('class', 'stat-box');
+    let cancelLabel = document.createElement('label');
+    cancelLabel.textContent = 'Cancel: ';
+    let cancelValue = document.createElement('span');
+    cancelValue.textContent = 'Non'; // Valeur par défaut
+    cancelBox.appendChild(cancelLabel);
+    cancelBox.appendChild(cancelValue);
+    stats.appendChild(cancelBox);
+    title.textContent = 'Statistiques';
+    stats.appendChild(title);
+
+}
 
 
 async function callAPI(methode, params) 
