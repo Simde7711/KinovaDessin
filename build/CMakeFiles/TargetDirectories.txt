@@ -1,0 +1,4 @@
+/repos/KinovaDessin/build/CMakeFiles/clockexample.dir
+/repos/KinovaDessin/build/CMakeFiles/vibrate.dir
+/repos/KinovaDessin/build/CMakeFiles/edit_cache.dir
+/repos/KinovaDessin/build/CMakeFiles/rebuild_cache.dir

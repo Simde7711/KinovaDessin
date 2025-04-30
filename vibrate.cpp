@@ -1,16 +1,15 @@
-
 #include <cstdio>
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
 #include <ostream>
-#include "include/SessionManager.h"
-#include "include/DeviceConfigClientRpc.h"
-#include "include/BaseClientRpc.h"
-#include "include/TransportClientUdp.h"
-#include "include/BaseCyclicClientRpc.h"
-#include "include/BaseClientRpc.h"
-#include "include/RouterClient.h"
+#include <SessionManager.h>
+#include <DeviceConfigClientRpc.h>
+#include <BaseClientRpc.h>
+#include <TransportClientUdp.h>
+#include <BaseCyclicClientRpc.h>
+#include <BaseClientRpc.h>
+#include <RouterClient.h>
 
 
 namespace k_api = Kinova::Api;
@@ -93,7 +92,7 @@ void vibrate(int timer_max,int frequency,float velocity_vibrate) { //timer_max e
   i=0;
   timespec t_first;
   timespec t_last;
-  int max = timer_max *(frequency / 1000); // convertir kHz et un temps (en ms) en nombre d'iterations. C'est
+  int max = timer_max *((float)frequency / (float)1000); // convertir kHz et un temps (en ms) en nombre d'iterations. C'est
                                      // plus optimiser comme sa que avec un autre timer.
   frequency = 1000000000 / frequency; // convertir Hertz en intervalles de nanosecondes
   while (i<max) {

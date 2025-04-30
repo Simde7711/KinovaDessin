@@ -1,0 +1,10 @@
+-std=gnu++11
+-I./kortex_api/include/client
+-I./kortex_api/include/client_stubs
+-I./kortex_api/include/common
+-I./kortex_api/include/google
+-I./kortex_api/include/messages
+-I./kortex_api/include
+-L./kortex_api/lib
+-lKortexApi
+-D_OS_UNIX

@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/repos/KinovaDessin/build/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

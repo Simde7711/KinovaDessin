@@ -9,7 +9,7 @@ int main(int argc, char **argv) {
   timespec t_first;
   timespec t_last;
 
-    int max = timer_max * (frequency / 1000); // convertir kHz et un temps (en ms) en nombre d'iterations. C'est
+  int max = timer_max * ((float)frequency / (float)1000); // convertir kHz et un temps (en ms) en nombre d'iterations. C'est
                                              // plus optimiser comme sa que avec un autre timer.
   frequency= 1000000000 / frequency; // convertir Hertz en intervalles de nanosecondes
   while (i<max) {

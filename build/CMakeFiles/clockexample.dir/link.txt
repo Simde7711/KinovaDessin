@@ -1,0 +1,1 @@
+/build_dir/gcc5/pkg/gcc5/usr/bin/g++-5 -g -Wl,--dependency-file=CMakeFiles/clockexample.dir/link.d CMakeFiles/clockexample.dir/clockexample.cpp.o -o clockexample  /repos/KinovaDessin/kortex_api/lib/libKortexApiCpp.a -lpthread
