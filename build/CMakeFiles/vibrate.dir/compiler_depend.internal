@@ -165,6 +165,7 @@ CMakeFiles/vibrate.dir/vibrate.cpp.o
  /repos/KinovaDessin/kortex_api/include/client/NotificationHandler.h
  /repos/KinovaDessin/kortex_api/include/client/RouterClient.h
  /repos/KinovaDessin/kortex_api/include/client/SessionManager.h
+ /repos/KinovaDessin/kortex_api/include/client/TransportClientTcp.h
  /repos/KinovaDessin/kortex_api/include/client/TransportClientUdp.h
  /repos/KinovaDessin/kortex_api/include/client_stubs/BaseClientRpc.h
  /repos/KinovaDessin/kortex_api/include/client_stubs/BaseCyclicClientRpc.h
@@ -175,6 +176,7 @@ CMakeFiles/vibrate.dir/vibrate.cpp.o
  /repos/KinovaDessin/kortex_api/include/common/KBasicException.h
  /repos/KinovaDessin/kortex_api/include/common/KDetailedException.h
  /repos/KinovaDessin/kortex_api/include/common/KError.h
+ /repos/KinovaDessin/kortex_api/include/common/KinovaTcpUtilities.h
  /repos/KinovaDessin/kortex_api/include/google/protobuf/arena.h
  /repos/KinovaDessin/kortex_api/include/google/protobuf/arena_impl.h
  /repos/KinovaDessin/kortex_api/include/google/protobuf/arenastring.h

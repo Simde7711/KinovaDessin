@@ -164,6 +164,7 @@ CMakeFiles/vibrate.dir/vibrate.cpp.o: /repos/KinovaDessin/vibrate.cpp \
   /repos/KinovaDessin/kortex_api/include/client/NotificationHandler.h \
   /repos/KinovaDessin/kortex_api/include/client/RouterClient.h \
   /repos/KinovaDessin/kortex_api/include/client/SessionManager.h \
+  /repos/KinovaDessin/kortex_api/include/client/TransportClientTcp.h \
   /repos/KinovaDessin/kortex_api/include/client/TransportClientUdp.h \
   /repos/KinovaDessin/kortex_api/include/client_stubs/BaseClientRpc.h \
   /repos/KinovaDessin/kortex_api/include/client_stubs/BaseCyclicClientRpc.h \
@@ -174,6 +175,7 @@ CMakeFiles/vibrate.dir/vibrate.cpp.o: /repos/KinovaDessin/vibrate.cpp \
   /repos/KinovaDessin/kortex_api/include/common/KBasicException.h \
   /repos/KinovaDessin/kortex_api/include/common/KDetailedException.h \
   /repos/KinovaDessin/kortex_api/include/common/KError.h \
+  /repos/KinovaDessin/kortex_api/include/common/KinovaTcpUtilities.h \
   /repos/KinovaDessin/kortex_api/include/google/protobuf/arena.h \
   /repos/KinovaDessin/kortex_api/include/google/protobuf/arena_impl.h \
   /repos/KinovaDessin/kortex_api/include/google/protobuf/arenastring.h \
@@ -606,6 +608,14 @@ vibrate: /build_dir/gcc5/pkg/gcc5/usr/lib/gcc/x86_64-pc-linux-gnu/5.5.0/crtbegin
 /usr/include/bits/getopt_core.h:
 
 /usr/include/bits/fp-logb.h:
+
+/usr/include/wctype.h:
+
+/usr/include/sched.h:
+
+/usr/include/bits/fp-fast.h:
+
+/usr/include/bits/flt-eval-method.h:
 
 /build_dir/gcc5/pkg/gcc5/usr/lib/gcc/x86_64-pc-linux-gnu/5.5.0/include/c++/list:
 
@@ -1065,6 +1075,8 @@ CMakeFiles/vibrate.dir/vibrate.cpp.o:
 
 /repos/KinovaDessin/kortex_api/include/client/SessionManager.h:
 
+/repos/KinovaDessin/kortex_api/include/client/TransportClientTcp.h:
+
 /lib/crtn.o:
 
 /repos/KinovaDessin/kortex_api/include/client_stubs/DeviceConfigClientRpc.h:
@@ -1086,6 +1098,12 @@ CMakeFiles/vibrate.dir/vibrate.cpp.o:
 /repos/KinovaDessin/kortex_api/include/messages/GripperCyclicMessage.pb.h:
 
 /repos/KinovaDessin/kortex_api/include/google/protobuf/stubs/logging.h:
+
+/repos/KinovaDessin/kortex_api/include/common/KinovaTcpUtilities.h:
+
+/build_dir/gcc5/pkg/gcc5/usr/lib/gcc/x86_64-pc-linux-gnu/5.5.0/include/c++/bits/postypes.h:
+
+/usr/include/bits/confname.h:
 
 /repos/KinovaDessin/kortex_api/include/google/protobuf/arena.h:
 
@@ -1241,10 +1259,6 @@ CMakeFiles/vibrate.dir/vibrate.cpp.o:
 
 /usr/include/assert.h:
 
-/build_dir/gcc5/pkg/gcc5/usr/lib/gcc/x86_64-pc-linux-gnu/5.5.0/include/c++/bits/postypes.h:
-
-/usr/include/bits/confname.h:
-
 /usr/include/bits/endianness.h:
 
 /usr/include/bits/types/struct_FILE.h:
@@ -1252,11 +1266,3 @@ CMakeFiles/vibrate.dir/vibrate.cpp.o:
 /usr/include/bits/environments.h:
 
 /usr/include/bits/fcntl.h:
-
-/usr/include/bits/flt-eval-method.h:
-
-/usr/include/wctype.h:
-
-/usr/include/sched.h:
-
-/usr/include/bits/fp-fast.h:

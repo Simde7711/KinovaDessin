@@ -312,6 +312,8 @@ CMakeFiles/vibrate.dir/vibrate.cpp.o: /repos/KinovaDessin/vibrate.cpp \
  /usr/include/bits/fcntl-linux.h /usr/include/linux/falloc.h \
  /usr/include/bits/stat.h /usr/include/bits/struct_stat.h \
  /build_dir/gcc5/pkg/gcc5/usr/lib/gcc/x86_64-pc-linux-gnu/5.5.0/include/c++/cstring \
+ /repos/KinovaDessin/kortex_api/include/client/TransportClientTcp.h \
+ /repos/KinovaDessin/kortex_api/include/common/KinovaTcpUtilities.h \
  /repos/KinovaDessin/kortex_api/include/client_stubs/BaseCyclicClientRpc.h \
  /repos/KinovaDessin/kortex_api/include/messages/BaseCyclic.pb.h \
  /repos/KinovaDessin/kortex_api/include/messages/InterconnectCyclicMessage.pb.h \
