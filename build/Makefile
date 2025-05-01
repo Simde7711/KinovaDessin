@@ -133,6 +133,19 @@ clockexample/fast:
 .PHONY : clockexample/fast
 
 #=============================================================================
+# Target rules for targets named gotohome
+
+# Build rule for target.
+gotohome: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gotohome
+.PHONY : gotohome
+
+# fast build rule for target.
+gotohome/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gotohome.dir/build.make CMakeFiles/gotohome.dir/build
+.PHONY : gotohome/fast
+
+#=============================================================================
 # Target rules for targets named vibrate
 
 # Build rule for target.
@@ -169,6 +182,30 @@ clockexample.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/clockexample.dir/build.make CMakeFiles/clockexample.dir/clockexample.cpp.s
 .PHONY : clockexample.cpp.s
 
+gotohome.o: gotohome.cpp.o
+.PHONY : gotohome.o
+
+# target to build an object file
+gotohome.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gotohome.dir/build.make CMakeFiles/gotohome.dir/gotohome.cpp.o
+.PHONY : gotohome.cpp.o
+
+gotohome.i: gotohome.cpp.i
+.PHONY : gotohome.i
+
+# target to preprocess a source file
+gotohome.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gotohome.dir/build.make CMakeFiles/gotohome.dir/gotohome.cpp.i
+.PHONY : gotohome.cpp.i
+
+gotohome.s: gotohome.cpp.s
+.PHONY : gotohome.s
+
+# target to generate assembly for a file
+gotohome.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gotohome.dir/build.make CMakeFiles/gotohome.dir/gotohome.cpp.s
+.PHONY : gotohome.cpp.s
+
 vibrate.o: vibrate.cpp.o
 .PHONY : vibrate.o
 
@@ -202,10 +239,14 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... clockexample"
+	@echo "... gotohome"
 	@echo "... vibrate"
 	@echo "... clockexample.o"
 	@echo "... clockexample.i"
 	@echo "... clockexample.s"
+	@echo "... gotohome.o"
+	@echo "... gotohome.i"
+	@echo "... gotohome.s"
 	@echo "... vibrate.o"
 	@echo "... vibrate.i"
 	@echo "... vibrate.s"
