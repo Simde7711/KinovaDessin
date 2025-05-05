@@ -1,6 +1,7 @@
 #include "BaseCyclic.pb.h"
 #include <cmath>
 #include <cstdio>
+#include <cstdlib>
 #include <stdlib.h>
 #include <ctime>
 #include <iostream>
@@ -96,12 +97,13 @@ void goto_angles(float *angles, servos_manager *servos, float velocity) {
   int i = 0;
   int frequency = velocity/OPERATION_ANGLE; //velocity = degrees/sec operation_angle = degrees velocity/operation_angle = 1/s (Hz)
   int interval = 1000000000 / frequency; // convertir Hertz en intervalles de nanosecondes
-  int operations[servos->count*2];//IMPORTANT! [1,500,0,300] ou 1 represente un mouvement positif et 500 le nombre d'operations necessaires
+  int operations[servos->count*2];//IMPORTANT! [1,500,-1,300] ou 1 represente un mouvement positif et 500 le nombre d'operations necessaires
   int operationmax=0;
   k_api::BaseCyclic::Feedback base_feedback;
   k_api::BaseCyclic::Command base_command;
 
   base_feedback = basecyclic->RefreshFeedback();
+
 
   while (i < servos->count) {
     servos->servos[i] = base_feedback.actuators(i).position();
@@ -185,33 +187,42 @@ void destroy_API()
 
 
 int main(int argc, char *argv[]) {
-  if(argc != 6){printf("usage: goto [host] [username] [password] [velocite] [angle1,angle2,10.50(max deux decimales),ect... en pair de meme taille que le nombre de servos]\n");exit(1);}
+  if(argc != 6){printf("usage: goto [host] [username] [password] [velocite] [angle1,angle2,110.50(max deux decimales),ect... en pair de meme taille que le nombre de servos]\n");exit(1);}
   example_api_creation(argv);
   prepare();
   float velocity;// deg par seconde
   sscanf(argv[4], "%f", &velocity);
-  servos_manager *servos;
-  servos->count=base->GetActuatorCount(0).count();
-  int angles_read = 0;
-  int size_command = sizeof(&argv[5])/sizeof(argv[5][0]);
+  servos_manager servos{};
+  servos.count=base->GetActuatorCount(0).count();
+  int angles_read = 1;
+  int size_command = strlen(argv[5]);
   for (int x = 0; x < size_command;x++) {
     if (argv[5][x] == ',') {
       angles_read++;
     }
   }
-  if ((int)floor(angles_read / servos->count) > 0) {
-    int angle_pairs = (int)floor(angles_read/servos->count);
-    float angles[angle_pairs][servos->count]; //discard tout ce qui est pas en pair de servos.count
-    char temp[5];
+  int angle_pairs = (int)floor(angles_read/servos.count);
+  if ((int)floor(angles_read / servos.count) > 0) {
+    float angles[angle_pairs][servos.count]; //discard tout ce qui est pas en pair de servos.count
+    char temp[6];
+    memset(&temp,0,6);
+    int o = 0; //compteur pour l'array temporaire
     int y = 0; // compteur vers servos.count
-    int z = 0; //compteur vers la commande (i.e angles[z][y] et x et le charactere)
+    int z = 0; //compteur vers la commande (i.e angles[z][y] et x est le charactere)
     for (int x = 0; x < size_command; x++) {
       if(argv[5][x]!=',') { //tellement insecure et stupide
-	temp[x%servos->count]=argv[5][x];
+        temp[o] = argv[5][x];
+	o++;
       }
       else {
-        sscanf("%f", temp, angles[z][y]);
-        if (y == servos->count - 1) {
+        sscanf(temp, "%f", &angles[z][y]);
+        if (angles[z][y] > 360 || angles[z][y] < 0) {
+	  printf("invalid angle");
+          exit(1);
+        }
+        o = 0;
+	memset(&temp,0,5);
+        if (y == servos.count - 1) {
           y = 0;
 	  z++;
 	}
@@ -220,14 +231,19 @@ int main(int argc, char *argv[]) {
         }
       }
     }
-    sscanf("%f", temp, angles[z][y]);
+    sscanf(temp, "%f", &angles[z][y]);//read le dernier
 
+    for (int i = 0; i < servos.count; i++) {
+      servos.servos[i] = 0;
+      servos.servo_done[i] = 0;
+    }
+    servos_manager *_servo = &servos;
     for (int x; x < angle_pairs; x++) {
       float *_angles = angles[x];
-      goto_angles(_angles,servos,velocity);
+      goto_angles(_angles,_servo,velocity);
     }
   }
-  else{printf("invalid number of angles passed. please pass at least %d for this robot\n",servos->count);}
+  else{printf("invalid number of angles passed. please pass at least %d for this robot\n",servos.count);}
   
   destroy_API();
 }
