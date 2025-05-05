@@ -67,13 +67,13 @@ CMAKE_BINARY_DIR = /repos/KinovaDessin/build
 
 # The main recursive "all" target.
 all: CMakeFiles/clockexample.dir/all
-all: CMakeFiles/gotohome.dir/all
+all: CMakeFiles/goto.dir/all
 all: CMakeFiles/vibrate.dir/all
 .PHONY : all
 
 # The main recursive "codegen" target.
 codegen: CMakeFiles/clockexample.dir/codegen
-codegen: CMakeFiles/gotohome.dir/codegen
+codegen: CMakeFiles/goto.dir/codegen
 codegen: CMakeFiles/vibrate.dir/codegen
 .PHONY : codegen
 
@@ -83,7 +83,7 @@ preinstall:
 
 # The main recursive "clean" target.
 clean: CMakeFiles/clockexample.dir/clean
-clean: CMakeFiles/gotohome.dir/clean
+clean: CMakeFiles/goto.dir/clean
 clean: CMakeFiles/vibrate.dir/clean
 .PHONY : clean
 
@@ -120,36 +120,36 @@ CMakeFiles/clockexample.dir/clean:
 .PHONY : CMakeFiles/clockexample.dir/clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/gotohome.dir
+# Target rules for target CMakeFiles/goto.dir
 
 # All Build rule for target.
-CMakeFiles/gotohome.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/gotohome.dir/build.make CMakeFiles/gotohome.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/gotohome.dir/build.make CMakeFiles/gotohome.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/repos/KinovaDessin/build/CMakeFiles --progress-num=3,4 "Built target gotohome"
-.PHONY : CMakeFiles/gotohome.dir/all
+CMakeFiles/goto.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/goto.dir/build.make CMakeFiles/goto.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/goto.dir/build.make CMakeFiles/goto.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/repos/KinovaDessin/build/CMakeFiles --progress-num=3,4 "Built target goto"
+.PHONY : CMakeFiles/goto.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/gotohome.dir/rule: cmake_check_build_system
+CMakeFiles/goto.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /repos/KinovaDessin/build/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/gotohome.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/goto.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /repos/KinovaDessin/build/CMakeFiles 0
-.PHONY : CMakeFiles/gotohome.dir/rule
+.PHONY : CMakeFiles/goto.dir/rule
 
 # Convenience name for target.
-gotohome: CMakeFiles/gotohome.dir/rule
-.PHONY : gotohome
+goto: CMakeFiles/goto.dir/rule
+.PHONY : goto
 
 # codegen rule for target.
-CMakeFiles/gotohome.dir/codegen:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/gotohome.dir/build.make CMakeFiles/gotohome.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/repos/KinovaDessin/build/CMakeFiles --progress-num=3,4 "Finished codegen for target gotohome"
-.PHONY : CMakeFiles/gotohome.dir/codegen
+CMakeFiles/goto.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/goto.dir/build.make CMakeFiles/goto.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/repos/KinovaDessin/build/CMakeFiles --progress-num=3,4 "Finished codegen for target goto"
+.PHONY : CMakeFiles/goto.dir/codegen
 
 # clean rule for target.
-CMakeFiles/gotohome.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/gotohome.dir/build.make CMakeFiles/gotohome.dir/clean
-.PHONY : CMakeFiles/gotohome.dir/clean
+CMakeFiles/goto.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/goto.dir/build.make CMakeFiles/goto.dir/clean
+.PHONY : CMakeFiles/goto.dir/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/vibrate.dir

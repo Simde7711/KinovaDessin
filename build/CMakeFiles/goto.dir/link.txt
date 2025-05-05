@@ -1,0 +1,1 @@
+/build_dir/gcc5/pkg/gcc5/usr/bin/g++-5 -g -Wl,--dependency-file=CMakeFiles/goto.dir/link.d CMakeFiles/goto.dir/goto.cpp.o -o goto  /repos/KinovaDessin/kortex_api/lib/libKortexApiCpp.a -lpthread
