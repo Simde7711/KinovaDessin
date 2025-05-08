@@ -1,0 +1,64 @@
+/* Réinitialiser certains styles par défaut du navigateur */
+body, h1, h2, h3, p, ul, ol, li, a {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Style général du corps */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f9;
+    color: #333;
+    margin: 20px;
+    padding: 0;
+}
+
+/* Style de l'en-tête */
+header {
+    background-color: #0056b3;
+    color: white;
+    padding: 1rem 2rem;
+    text-align: center;
+}
+
+/* Style du contenu principal */
+main {
+    padding: 2rem;
+}
+
+/* Style du pied de page */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1rem 2rem;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Style des liens */
+a {
+    color: #0056b3;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* style de boutons */
+button {
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+}
+/* Style des boutons au survol */
+button:hover {
+    background-color: #003d80;
+}
