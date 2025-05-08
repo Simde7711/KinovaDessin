@@ -1,6 +1,10 @@
+// On définit la variable zoneRobot pour qu'elle soit égale à l'élément HTML avec l'id "zoneRobot"
+// On définit la variable robot pour qu'elle soit égale à un tableau vide
 robot = [];
 zoneRobot;
 robotCount = 1;
+
+
 function init()
 {
     zoneRobot= document.getElementById("zoneRobot");
@@ -26,16 +30,6 @@ function AjoutRobot()
     ip.setAttribute('type', 'text');
     ipTitle.appendChild(ip);
 
-    // let scaleTitle = document.createElement('h4');
-    // scaleTitle.textContent = 'Scale: ';
-    // robot.appendChild(scaleTitle);
-
-    // Ajouter un champ d'entrée pour l'échelle
-    // let scale = document.createElement("input");
-    // scale.setAttribute('type', 'number');
-    // scale.setAttribute('value', 'default');
-    // scaleTitle.appendChild(scale);
-
     // Créer un conteneur pour les commandes
     let commands = document.createElement('div');
     commands.setAttribute('id', 'commands'); // Utiliser 'id' au lieu de 'name'
@@ -44,37 +38,21 @@ function AjoutRobot()
     command.setAttribute('id', 'command');
     commands.appendChild(command);
 
-    // Ajouter un bouton pour ajouter des lignes "commands"
-    let addCommandButton = document.createElement("button");
-    addCommandButton.textContent = "Ajouter une commande";
-    addCommandButton.addEventListener("click", () => {
-        // Créer une nouvelle ligne de commande
+
+    // Ajouter 6 lignes de commandes par défaut
+    for (let i = 0; i < 6; i++) {
         let newCommand = document.createElement("div");
-        newCommand.textContent = "Commande #" + (commands.childElementCount) + ": "; // Compter le nombre d'éléments enfants pour le numéro de commande
+        newCommand.textContent = "Moteur #" + (commands.childElementCount) + ": "; // Utiliser childElementCount pour le numéro du moteur
         newCommand.classList.add("command-line");
+        
+        // Créer un champ d'entrée pour l'angle
+        let angleInput = document.createElement("input");
+        angleInput.setAttribute("type", "number");
+        angleInput.setAttribute("placeholder", "Angle");
+        newCommand.appendChild(angleInput);
 
-        let xInput = document.createElement("input");
-        xInput.setAttribute("type", "number");
-        xInput.setAttribute("placeholder", "Moteurs");
-        newCommand.appendChild(xInput);
-
-        let yInput = document.createElement("input");
-        yInput.setAttribute("type", "number");
-        yInput.setAttribute("placeholder", "Angle");
-        newCommand.appendChild(yInput);
-
-        // let iInput = document.createElement("input");
-        // iInput.setAttribute("type", "number");
-        // iInput.setAttribute("placeholder", "I");
-        // newCommand.appendChild(iInput);
-
-        let drawCheckbox = document.createElement("input");
-        drawCheckbox.setAttribute("type", "checkbox");
-        newCommand.appendChild(drawCheckbox);
-
-        // Ajouter la nouvelle ligne de commande au conteneur "commands"
         commands.appendChild(newCommand);
-    });
+    }
 
 
 
@@ -87,9 +65,6 @@ function AjoutRobot()
         alert("Configuration du Robot #" + currentRobotCount + " terminée !");
         GriserElement(); // Appeler la fonction GriserElement
     });
-
-    // Ajouter le bouton "Ajouter une commande" au conteneur du robot
-    robot.appendChild(addCommandButton); // <-- Ajouté au conteneur du robot
     // Ajouter le conteneur des commandes au robot
     robot.appendChild(commands);
     // Ajouter le bouton "finis" au conteneur du robot
@@ -155,10 +130,10 @@ async function degriserStats() {
     function handleSpeedEnter(value) {
         alert('Vitesse définie à : ' + value); // Exemple d'action
     }
-
+    // Créer un conteneur pour "Pause" et "Annuler"
     let pauseCancelContainer = document.createElement('div');
     pauseCancelContainer.setAttribute('class', 'pause-cancel-container'); // Classe pour le style
-
+    // Créer les conteneurs "Pause" et "Annuler" 
     let pauseBox = document.createElement('div');
     pauseBox.setAttribute('class', 'stat-box');
     let pauseLabel = document.createElement('label');

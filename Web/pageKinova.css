@@ -58,7 +58,7 @@ button {
     cursor: pointer;
     border-radius: 5px;
 }
-
+/* Style des boutons au survol */
 button:hover {
     background-color: #003d80;
 }
