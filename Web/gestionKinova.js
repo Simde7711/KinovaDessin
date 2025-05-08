@@ -37,11 +37,15 @@ function AjoutRobot()
     command.textContent = "Commande (Le nombre de moteur et l'angle) : ";
     command.setAttribute('id', 'command');
     commands.appendChild(command);
-
+    
+    let commandsDiv = document.createElement('div');
+    commandsDiv.setAttribute('id', 'commandsDiv');
+    commands.appendChild(commandsDiv);
 
     // Ajouter 6 lignes de commandes par défaut
     for (let i = 0; i < 6; i++) {
         let newCommand = document.createElement("div");
+
         newCommand.textContent = "Moteur #" + (commands.childElementCount) + ": "; // Utiliser childElementCount pour le numéro du moteur
         newCommand.classList.add("command-line");
         
@@ -51,7 +55,7 @@ function AjoutRobot()
         angleInput.setAttribute("placeholder", "Angle");
         newCommand.appendChild(angleInput);
 
-        commands.appendChild(newCommand);
+        commandsDiv.appendChild(newCommand);
     }
 
 
@@ -64,6 +68,19 @@ function AjoutRobot()
     finishButton.addEventListener("click", () => {
         alert("Configuration du Robot #" + currentRobotCount + " terminée !");
         GriserElement(); // Appeler la fonction GriserElement
+
+        zoneCommand = document.getElementById("commandsDiv");
+        let array = [];
+        for (const child of zoneCommand.children) 
+        {
+            let angleInput = child.querySelector('input'); 
+            if (angleInput) 
+            {
+                array.push(angleInput.value); 
+            }
+        }
+
+        CreationRobot(array);
     });
     // Ajouter le conteneur des commandes au robot
     robot.appendChild(commands);
@@ -181,15 +198,16 @@ async function callAPI(methode, params)
     return response.json();
 }
 
-// async function ()
-// {
 
-// }
 
 // POST: API.php/Robots/ip (avec body)
-async function CreationRobot() 
+async function CreationRobot(array) 
 {
+    let jsonObject = {
+        "commands": array.map(item => ({ item: item }))
+    };
 
+    callAPI("POST", jsonObject);
 }
 
 init();
