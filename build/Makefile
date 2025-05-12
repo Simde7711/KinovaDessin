@@ -133,6 +133,19 @@ clockexample/fast:
 .PHONY : clockexample/fast
 
 #=============================================================================
+# Target rules for targets named daemon
+
+# Build rule for target.
+daemon: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 daemon
+.PHONY : daemon
+
+# fast build rule for target.
+daemon/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/daemon.dir/build.make CMakeFiles/daemon.dir/build
+.PHONY : daemon/fast
+
+#=============================================================================
 # Target rules for targets named goto
 
 # Build rule for target.
@@ -181,6 +194,30 @@ clockexample.s: clockexample.cpp.s
 clockexample.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/clockexample.dir/build.make CMakeFiles/clockexample.dir/clockexample.cpp.s
 .PHONY : clockexample.cpp.s
+
+daemon.o: daemon.cpp.o
+.PHONY : daemon.o
+
+# target to build an object file
+daemon.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/daemon.dir/build.make CMakeFiles/daemon.dir/daemon.cpp.o
+.PHONY : daemon.cpp.o
+
+daemon.i: daemon.cpp.i
+.PHONY : daemon.i
+
+# target to preprocess a source file
+daemon.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/daemon.dir/build.make CMakeFiles/daemon.dir/daemon.cpp.i
+.PHONY : daemon.cpp.i
+
+daemon.s: daemon.cpp.s
+.PHONY : daemon.s
+
+# target to generate assembly for a file
+daemon.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/daemon.dir/build.make CMakeFiles/daemon.dir/daemon.cpp.s
+.PHONY : daemon.cpp.s
 
 goto.o: goto.cpp.o
 .PHONY : goto.o
@@ -239,11 +276,15 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... clockexample"
+	@echo "... daemon"
 	@echo "... goto"
 	@echo "... vibrate"
 	@echo "... clockexample.o"
 	@echo "... clockexample.i"
 	@echo "... clockexample.s"
+	@echo "... daemon.o"
+	@echo "... daemon.i"
+	@echo "... daemon.s"
 	@echo "... goto.o"
 	@echo "... goto.i"
 	@echo "... goto.s"

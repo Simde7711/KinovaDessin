@@ -67,12 +67,14 @@ CMAKE_BINARY_DIR = /repos/KinovaDessin/build
 
 # The main recursive "all" target.
 all: CMakeFiles/clockexample.dir/all
+all: CMakeFiles/daemon.dir/all
 all: CMakeFiles/goto.dir/all
 all: CMakeFiles/vibrate.dir/all
 .PHONY : all
 
 # The main recursive "codegen" target.
 codegen: CMakeFiles/clockexample.dir/codegen
+codegen: CMakeFiles/daemon.dir/codegen
 codegen: CMakeFiles/goto.dir/codegen
 codegen: CMakeFiles/vibrate.dir/codegen
 .PHONY : codegen
@@ -83,6 +85,7 @@ preinstall:
 
 # The main recursive "clean" target.
 clean: CMakeFiles/clockexample.dir/clean
+clean: CMakeFiles/daemon.dir/clean
 clean: CMakeFiles/goto.dir/clean
 clean: CMakeFiles/vibrate.dir/clean
 .PHONY : clean
@@ -120,13 +123,45 @@ CMakeFiles/clockexample.dir/clean:
 .PHONY : CMakeFiles/clockexample.dir/clean
 
 #=============================================================================
+# Target rules for target CMakeFiles/daemon.dir
+
+# All Build rule for target.
+CMakeFiles/daemon.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/daemon.dir/build.make CMakeFiles/daemon.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/daemon.dir/build.make CMakeFiles/daemon.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/repos/KinovaDessin/build/CMakeFiles --progress-num=3,4 "Built target daemon"
+.PHONY : CMakeFiles/daemon.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/daemon.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /repos/KinovaDessin/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/daemon.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /repos/KinovaDessin/build/CMakeFiles 0
+.PHONY : CMakeFiles/daemon.dir/rule
+
+# Convenience name for target.
+daemon: CMakeFiles/daemon.dir/rule
+.PHONY : daemon
+
+# codegen rule for target.
+CMakeFiles/daemon.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/daemon.dir/build.make CMakeFiles/daemon.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/repos/KinovaDessin/build/CMakeFiles --progress-num=3,4 "Finished codegen for target daemon"
+.PHONY : CMakeFiles/daemon.dir/codegen
+
+# clean rule for target.
+CMakeFiles/daemon.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/daemon.dir/build.make CMakeFiles/daemon.dir/clean
+.PHONY : CMakeFiles/daemon.dir/clean
+
+#=============================================================================
 # Target rules for target CMakeFiles/goto.dir
 
 # All Build rule for target.
 CMakeFiles/goto.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/goto.dir/build.make CMakeFiles/goto.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/goto.dir/build.make CMakeFiles/goto.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/repos/KinovaDessin/build/CMakeFiles --progress-num=3,4 "Built target goto"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/repos/KinovaDessin/build/CMakeFiles --progress-num=5,6 "Built target goto"
 .PHONY : CMakeFiles/goto.dir/all
 
 # Build rule for subdir invocation for target.
@@ -143,7 +178,7 @@ goto: CMakeFiles/goto.dir/rule
 # codegen rule for target.
 CMakeFiles/goto.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/goto.dir/build.make CMakeFiles/goto.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/repos/KinovaDessin/build/CMakeFiles --progress-num=3,4 "Finished codegen for target goto"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/repos/KinovaDessin/build/CMakeFiles --progress-num=5,6 "Finished codegen for target goto"
 .PHONY : CMakeFiles/goto.dir/codegen
 
 # clean rule for target.
@@ -158,7 +193,7 @@ CMakeFiles/goto.dir/clean:
 CMakeFiles/vibrate.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/vibrate.dir/build.make CMakeFiles/vibrate.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/vibrate.dir/build.make CMakeFiles/vibrate.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/repos/KinovaDessin/build/CMakeFiles --progress-num=5,6 "Built target vibrate"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/repos/KinovaDessin/build/CMakeFiles --progress-num=7,8 "Built target vibrate"
 .PHONY : CMakeFiles/vibrate.dir/all
 
 # Build rule for subdir invocation for target.
@@ -175,7 +210,7 @@ vibrate: CMakeFiles/vibrate.dir/rule
 # codegen rule for target.
 CMakeFiles/vibrate.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/vibrate.dir/build.make CMakeFiles/vibrate.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/repos/KinovaDessin/build/CMakeFiles --progress-num=5,6 "Finished codegen for target vibrate"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/repos/KinovaDessin/build/CMakeFiles --progress-num=7,8 "Finished codegen for target vibrate"
 .PHONY : CMakeFiles/vibrate.dir/codegen
 
 # clean rule for target.

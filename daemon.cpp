@@ -15,6 +15,7 @@
 #include <nlohmann/json.hpp>
 
 // std
+#include <thread>
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -46,22 +47,23 @@ class Robot{
     delete transport;
         }
 
-        Robot(const char *_ipRobot, Commands *_commands, Parameters *_parameters) {	    
+  Robot(const char *_ipRobot, Commands *_commands, Parameters *_parameters, char **argv) {	    
     ipRobot = _ipRobot;
     commandsPtr = new Commands(*_commands);
     parametersPtr = new Parameters(*_parameters);
 
-    std::thread threadRobot;
-    threadRobot.detach();
+    // std::thread threadRobot(Process);
+    // threadRobot.detach();
+    Process(argv);
         }
         void CreateAPI(char **argv);
-       
+        void UpdateParameters(Parameters *_parameters);
+  int done=0;
     private:
         Commands *commandsPtr;
         Parameters *parametersPtr;
 
-        void Process();
-  void UpdateParameters(Parameters *_parameters);
+        void Process(char **argv);
         // API kinova
         void Prepare();
         #define PORT 10000
@@ -75,6 +77,7 @@ class Robot{
         k_api::RouterClient *RTrouter;
         k_api::TransportClientTcp *transport;
         k_api::TransportClientUdp *RTtransport;
+        #define OPERATION_ANGLE 0.05f
 };
 
 void Robot::CreateAPI(char **argv)
@@ -122,18 +125,26 @@ void Robot::UpdateParameters(Parameters *_parameters)
     *parametersPtr = *_parameters;
 }
 
-void Robot::Process()
-{
+void Robot::Process(char **argv) {
+  CreateAPI(argv);
     Prepare();
 
+  timespec t_first;
+  timespec t_last;
+    
     k_api::BaseCyclic::Feedback base_feedback;
-    k_api::BaseCyclic::Command  base_command;
+    k_api::BaseCyclic::Command base_command;
+    
+    int velocity = 10;
 
+    int frequency = velocity/OPERATION_ANGLE;
+    int interval = 1000000000 / frequency;
+
+    
     base_feedback = basecyclic->RefreshFeedback();
-
     int servoscount = base->GetActuatorCount().count();
     int i = 0;
-
+    int servos_done[servoscount];
     float servos[servoscount];
 
     while (i < servoscount) 
@@ -143,8 +154,68 @@ void Robot::Process()
         i++;
     }
 
-    
-         
+    int operations[servoscount];
+    int operation_sens[servoscount];
+    int operationmax=0;
+
+    for (int x = 0; x < servoscount; x++){// loptimisation de cette partie ne devrait pas etre necessaire car elle est faite une fois par mouvement. A voir si on fait >20 goto_angle() par seconde genre
+    //on a 4 possibilites
+    float diff = commandsPtr->angles[x] - servos[x];
+    if (abs(diff) < OPERATION_ANGLE) {
+      servos_done[x]=1; // will not operate on difference smaller than operation angle
+    }
+    else {
+      servos_done[x]=0;
+      if (diff > 0) {
+	if (diff < 180) {//1
+	  operation_sens[x] = 1; // mouvement positif
+	  operations[x]=diff/OPERATION_ANGLE;
+	}
+	else {//2
+	  operation_sens[x] = -1; // mouvement negatif
+	  operations[x]=(360-diff)/OPERATION_ANGLE; //va falloir trouver un moyen d'underflow si l'API le fait pas (ils le font probablement)
+      }
+    }
+      else {
+	if (diff > -180) {//3
+	operation_sens[x] = -1; // mouvement negatif
+	operations[x]=abs(diff)/OPERATION_ANGLE;
+      }
+	else {//4 deterministique, on est obliger de tomber dans une des 4 options donc un peut faire quelquechose dinsecure comme le if ci-dessous
+        operation_sens[x] = 1;//mouvement positif
+	operations[x]=(360-abs(diff))/OPERATION_ANGLE;
+      }
+    }
+      
+    if (operations[x] > operationmax) {
+      operationmax=operations[x];
+    }
+   }
+}
+
+  i=0;
+  while (i<operationmax){
+    clock_gettime(CLOCK_MONOTONIC, &t_first);
+    // DO THINGS UNDER
+    for (int x = 0; x < servoscount; x++) {
+      if (!servos_done[x]) {
+        servos[x] += (OPERATION_ANGLE * operation_sens[x]);
+	if(i==operations[x]){
+	  servos_done[x]=1;
+        }
+	base_command.mutable_actuators(x)->set_position(servos[x]);
+      }
+    }
+    basecyclic->Refresh_async(base_command,0);
+    // DO THINGS ABOVE
+    clock_gettime(CLOCK_MONOTONIC, &t_last);
+    while ( ((( t_last.tv_sec - t_first.tv_sec ) *1000000000 ) + ( t_last.tv_nsec - t_first.tv_nsec ) ) < interval) {
+      clock_gettime(CLOCK_MONOTONIC, &t_last);
+    }
+    i++;
+  }
+
+  this->done=1;
 }
 
 using json = nlohmann::json;
@@ -160,11 +231,12 @@ json ParsingJson(std::string filepath)
 }
 
 int main(int argc, char **argv) {
-
-  if (argc != 1) {
-    printf("usage: daemon [filepath]");
+  printf("%i",argc);
+  if (argc != 4) {
+    printf("usage: daemon [filepath] [username] [passwd] \n");
     exit(-1);
   }
+  
   std::string filePath=argv[1];
 
     timespec t_first;
@@ -179,7 +251,9 @@ int main(int argc, char **argv) {
         json jsonCommands = ParsingJson(filePath+"/commands.json");
         json jsonParameters = ParsingJson(filePath+"/parameters.json");
 
-        for (int i = 0; 1 < jsonCommands["robots"].size(); i++)
+        std::cout << "json : " << jsonCommands["robots"].size() << '\n';
+	
+        for (int i = 0; i < jsonCommands["robots"].size(); i++)
         {
             bool enAction = false;
             for (const Robot &robot : robots) 
@@ -194,29 +268,30 @@ int main(int argc, char **argv) {
             {
                 Commands commands;
 
-                size_t angle_count = jsonCommands["robots"][i]["commands"].size();
+                const size_t angle_count = jsonCommands["robots"][i]["infoDessin"]["commands"].size();
                 float angles[angle_count];
                 commands.angles = angles;
 
                 for (size_t j = 0; j < angle_count; ++j) 
                 {
-                    commands.angles[j] = jsonCommands["robots"][i]["commands"][j].get<float>();
+                    commands.angles[j] = jsonCommands["robots"][i]["infoDessin"]["commands"][j].get<float>();
                 }
 
                 Parameters parameters;
                 parameters.vitesse = 1;
 
-	        const char *_jsonCommands = jsonCommands["robots"][i]["ip"].get<std::string>().c_str();
-                Robot robot(
-		_jsonCommands,
-		&commands,
-		&parameters);
-
-		robot.CreateAPI(argv);
-		robots.push_back(robot);
+	        const char *ip = jsonCommands["robots"][i]["ip"].get<std::string>().c_str();
+                Robot robot(ip, &commands, &parameters, argv);
+                printf("here"); 
+                robots.push_back(robot);
             }
         }
-
+        for (int i = 0; i < robots.size(); i++) {
+          if (robots[i].done) {
+	    robots.erase(robots.begin()+i);
+          }
+	  //!TODO ERASE DANS LE JSON POUR PAS LE RECREER TODO!
+        }
         // DO THINGS ABOVE
         
         clock_gettime(CLOCK_MONOTONIC, &t_last);

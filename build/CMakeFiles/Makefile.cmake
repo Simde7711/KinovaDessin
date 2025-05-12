@@ -48,6 +48,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/clockexample.dir/DependInfo.cmake"
+  "CMakeFiles/daemon.dir/DependInfo.cmake"
   "CMakeFiles/goto.dir/DependInfo.cmake"
   "CMakeFiles/vibrate.dir/DependInfo.cmake"
   )
