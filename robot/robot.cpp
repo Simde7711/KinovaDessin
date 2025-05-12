@@ -1,16 +1,16 @@
-#include "robot.h"
+#include "robot.hpp"
 
 // std
 #include <thread>
 #include <iostream>
 
-Robot::Robot(std::string *_ipRobot, Commands *_commands, Parameters *_parameters)
+Robot::Robot(char *_ipRobot, Commands *_commands, Parameters *_parameters)
 {
-    ipRobot = *_ipRobot;
+    ipRobot = _ipRobot;
     commandsPtr = new Commands(*_commands);
     parametersPtr = new Parameters(*_parameters);
 
-    std::thread threadRobot(Process);
+    std::thread threadRobot;
     threadRobot.detach();
 }
 

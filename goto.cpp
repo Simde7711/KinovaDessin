@@ -233,12 +233,18 @@ int main(int argc, char *argv[]) {
     }
     sscanf(temp, "%f", &angles[z][y]);//read le dernier
 
+    float a[servos.count];
+    int b[servos.count];
+
+    servos.servos = a;
+    servos.servo_done = b;
+    
     for (int i = 0; i < servos.count; i++) {
       servos.servos[i] = 0;
       servos.servo_done[i] = 0;
     }
     servos_manager *_servo = &servos;
-    for (int x; x < angle_pairs; x++) {
+    for (int x=0; x < angle_pairs; x++) {
       float *_angles = angles[x];
       goto_angles(_angles,_servo,velocity);
     }
