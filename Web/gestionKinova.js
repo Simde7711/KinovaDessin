@@ -26,6 +26,7 @@ function AjoutRobot()
 
     // Ajouter un champ d'entrée pour l'IP
     let ip = document.createElement("input");
+    ip.setAttribute('id', 'ip');
     ip.name = "ip";
     ip.setAttribute('type', 'text');
     ipTitle.appendChild(ip);
@@ -46,7 +47,7 @@ function AjoutRobot()
     for (let i = 0; i < 6; i++) {
         let newCommand = document.createElement("div");
 
-        newCommand.textContent = "Moteur #" + (commands.childElementCount) + ": "; // Utiliser childElementCount pour le numéro du moteur
+        newCommand.textContent = "Moteur #" + (i + 1) + ": "; // Utiliser childElementCount pour le numéro du moteur
         newCommand.classList.add("command-line");
         
         // Créer un champ d'entrée pour l'angle
@@ -80,7 +81,8 @@ function AjoutRobot()
             }
         }
 
-        CreationRobot(array);
+
+        CreationRobot(array, ip.value);
     });
     // Ajouter le conteneur des commandes au robot
     robot.appendChild(commands);
@@ -179,11 +181,11 @@ async function degriserStats() {
     stats.appendChild(title);
 }
 
-async function callAPI(methode, params) 
+async function callAPI(methode, urlReste, params) 
 {
-    const url = 'http://localhost/API.php';
+    const url = 'https://descoteaux.techinfo420.ca/kinova/API.php/'+urlReste;
 
-    const response = await fetch(url+params, {
+    const response = await fetch(url, {
         method: methode,
         headers: {
             'Content-Type': 'application/json'
@@ -201,13 +203,13 @@ async function callAPI(methode, params)
 
 
 // POST: API.php/Robots/ip (avec body)
-async function CreationRobot(array) 
+async function CreationRobot(array, ipValue) 
 {
     let jsonObject = {
-        "commands": array.map(item => ({ item: item }))
+        "commands": array.map(Number)
     };
 
-    callAPI("POST", jsonObject);
+    callAPI("POST", "Robots/"+ipValue, jsonObject);
 }
 
 init();
